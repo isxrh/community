@@ -31,6 +31,20 @@ function send_letter() {
 }
 
 function delete_msg() {
-	// TODO 删除数据
-	$(this).parents(".media").remove();
+	var letterId = $("input[name='letterId']").val();
+	$.post(
+		CONTEXT_PATH + "/letter/delete",
+		{"letterId":letterId},
+		function (data) {
+			data = $.parseJSON(data);
+			if (data.code == 0) {
+				// alert("删除成功！");
+				$(this).parents(".media").remove();
+				location.reload();
+			} else {
+				alert("删除失败！" + data.msg);
+			}
+		}
+	)
+
 }

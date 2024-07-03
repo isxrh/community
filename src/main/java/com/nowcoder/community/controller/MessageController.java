@@ -143,4 +143,14 @@ public class MessageController {
 
         return CommunityUtil.getJSONString(0);
     }
+
+    @RequestMapping(path = "letter/delete", method = RequestMethod.POST)
+    @ResponseBody
+    public String deleteLetter(int letterId) {
+        System.out.println(letterId + "***************************");
+        List<Integer> letterIds = new ArrayList<>();
+        letterIds.add(letterId);
+        messageService.deleteMessage(letterIds);
+        return CommunityUtil.getJSONString(0);
+    }
 }
