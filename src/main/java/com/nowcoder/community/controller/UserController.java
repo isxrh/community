@@ -1,13 +1,11 @@
 package com.nowcoder.community.controller;
 
 import com.nowcoder.community.annotation.LoginRequired;
+import com.nowcoder.community.entity.Comment;
 import com.nowcoder.community.entity.DiscussPost;
 import com.nowcoder.community.entity.Page;
 import com.nowcoder.community.entity.User;
-import com.nowcoder.community.service.DiscussPostService;
-import com.nowcoder.community.service.FollowService;
-import com.nowcoder.community.service.LikeService;
-import com.nowcoder.community.service.UserService;
+import com.nowcoder.community.service.*;
 import com.nowcoder.community.util.CommunityConstant;
 import com.nowcoder.community.util.CommunityUtil;
 import com.nowcoder.community.util.HostHolder;
@@ -64,6 +62,9 @@ public class UserController implements CommunityConstant {
 
     @Autowired
     private DiscussPostService discussPostService;
+
+    @Autowired
+    private CommentService commentService;
 
     @LoginRequired
     @RequestMapping(path = "/setting", method = RequestMethod.GET)
@@ -207,4 +208,36 @@ public class UserController implements CommunityConstant {
         return "/site/my-post";
     }
 
+    @RequestMapping(path = "/myReply/{userId}", method = RequestMethod.GET)
+    public String getUserReplyPage(@PathVariable("userId") int userId, Model model, Page page) {
+        User user = userService.findUserById(userId);
+        if (user == null) {
+            throw new RuntimeException("该用户不存在");
+        }
+
+        model.addAttribute("user", user);
+
+        int commentCount = commentService.findCommentCountByUserId(user.getId());
+        model.addAttribute("commentCount", commentCount);
+
+        page.setLimit(5);
+        page.setPath("/user/myReply/" + user.getId());
+        page.setRows(commentCount);
+
+        List<Comment> list = commentService.findCommentByUserId(user.getId(), page.getOffset(), page.getLimit());
+        List<Map<String, Object>> comments  = new ArrayList<>();
+        if (list != null) {
+            for (Comment comment: list) {
+                Map<String, Object> map = new HashMap<>();
+                map.put("comment", comment);
+
+                DiscussPost post = discussPostService.findDiscussPostById(comment.getEntityId());
+                map.put("post", post);
+
+                comments.add(map);
+            }
+        }
+        model.addAttribute("comments", comments);
+        return "/site/my-reply";
+    }
 }

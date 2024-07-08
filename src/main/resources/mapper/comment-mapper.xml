@@ -38,4 +38,24 @@
         values (#{userId}, #{entityType}, #{entityId}, #{targetId}, #{content}, #{status}, #{createTime})
     </insert>
 
+    <!--List<Comment> selectCommentByUserId(int userId, int offset, int limit);-->
+    <select id="selectCommentByUserId" resultType="Comment">
+        select <include refid="selectFields"></include>
+        from comment
+        where status = 0
+        and user_id = #{userId}
+        and entity_type = 1
+        order by create_time asc
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--int selectCountByUserId(int userId);-->
+    <select id="selectCountByUserId" resultType="int">
+        select count(id)
+        from comment
+        where status = 0
+        and user_id = #{userId}
+        and entity_type = 1
+    </select>
+
 </mapper>
