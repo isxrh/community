@@ -58,4 +58,12 @@
         and entity_type = 1
     </select>
 
+    <!--Comment selectCommentById(int id);-->
+    <select id="selectCommentById" resultType="Comment">
+        select <include refid="selectFields"></include>
+        from comment
+        where status = 0
+        and id = #{id}
+    </select>
+
 </mapper>

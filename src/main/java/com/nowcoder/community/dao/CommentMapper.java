@@ -23,4 +23,6 @@ public interface CommentMapper {
      * 查询用户所有的对帖子的评论的数量
      */
     int selectCountByUserId(int userId);
+
+    Comment selectCommentById(int id);
 }
