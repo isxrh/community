@@ -94,6 +94,8 @@
 								</li>
 								<li class="d-inline ml-2">|</li>
 								<li class="d-inline ml-2"><a href="#replyform" class="text-primary">回帖 <i th:text="${post.commentCount}">7</i></a></li>
+								<li class="d-inline ml-2">|</li>
+								<li class="d-inline ml-2"><a th:href="@{|/share?htmlUrl=${#httpServletRequest.requestURL}|}" class="text-primary">分享 </a></li>
 							</ul>
 						</div>
 					</div>
