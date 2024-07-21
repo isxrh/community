@@ -160,6 +160,8 @@ public class DiscussPostController implements CommunityConstant {
             throw new RuntimeException("该用户不存在");
         }
 
+        User loginUser = hostHolder.getUser();
+        model.addAttribute("loginUser", loginUser);
         model.addAttribute("user", user);
 
         int discussPostRows = discussPostService.findDiscussPostRows(user.getId());

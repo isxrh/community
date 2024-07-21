@@ -93,7 +93,7 @@
 								跟左程云老师学算法，不仅能解决以上所有问题，还能在短时间内得到最大程度的提升！！！								
 							</div>
 							<div class="text-right font-size-12 text-muted">
-								<a class="text-primary mr-3" th:href="@{|/discuss/deletemypost/${map.post.id}|}">删除 </a>
+								<a class="text-primary mr-3" th:if="${loginUser!=null && loginUser.id==map.user.id}" th:href="@{|/discuss/deletemypost/${map.post.id}|}">删除 </a>
 								赞 <i class="mr-3" th:text="${map.likeCount}">11</i>
 								发布于 <b th:text="${#dates.format(map.post.createTime, 'yyyy-MM-dd HH:mm:ss')}">2019-04-15 10:10:10</b>
 							</div>
