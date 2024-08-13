@@ -50,7 +50,7 @@ public class AlphaController {
         try(
                 PrintWriter writer = response.getWriter();
                 ) {
-            writer.write("<h1>牛客网<h1>");
+            writer.write("<h1>交流平台<h1>");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
