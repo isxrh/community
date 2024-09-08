@@ -1,3 +1,4 @@
+/*
 $(function () {
     $("#uploadForm").submit(upload);
 });
@@ -33,3 +34,4 @@ function upload() {
     // 不提交表单
     return false;
 }
+*/
